@@ -12,5 +12,4 @@ app.get("/health", function (req, res){
 
 app.use("/auth", authRoutes);
 
-
 export default app;

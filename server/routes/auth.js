@@ -1,6 +1,8 @@
 import express from "express";
 import User from "../models/User.js"
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import "dotenv/config.js"
 
 const router = express.Router();
 
@@ -43,10 +45,21 @@ router.post("/login", async function(req,
             res.status(401).json({ error: 'Invalid credentials'});
         }
 
-        res.status(201).json({message: 'User logged successfully'});
+        // Creation of the JWT
+        const token = jwt.sign({email}, process.env.JWT_SECRET, { expiresIn: "1h" })
+
+        res.status(201).json({token});
     } catch (error) {
         res.status(500).json({error: 'Server error'});
     }
 });
+
+// Logout
+router.get("/logout", (req, res) => {
+    res.clearCookie("jwtToken");
+    res.status(200).json({message:"logout succesfull"});
+});
+
+module.exports = router;
 
 export default router;
