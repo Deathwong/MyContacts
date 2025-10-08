@@ -16,7 +16,7 @@ export default function Register() {
             setMsg("Account created successfully!");
             setTimeout(() => navigate("/login"), 1000);
         } catch (err) {
-            setMsg("Registration failed");
+            setMsg("Registration failed: " + err);
         }
     };
 
